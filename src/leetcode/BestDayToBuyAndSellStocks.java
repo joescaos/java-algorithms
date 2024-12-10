@@ -7,29 +7,24 @@ public class BestDayToBuyAndSellStocks {
 
   public static void main(String[] args) {
 
-    int[] prices = {7,6,4,3,1};
+    int[] prices = {1,2,4,2,5,7,2,4,9,0,9};
     System.out.println(solution(prices));
   }
 
   public static int solution(int[] nums) {
-    int dayToBuy = nums.length;
-    int dayToSell = 0;
-    Map<Integer, Integer> indexes = new HashMap<>();
-    for (int i = 0; i < nums.length; i++) {
-      dayToBuy = Math.min(dayToBuy, nums[i]);
-      indexes.put(nums[i], i);
-    }
-    if (indexes.containsKey(dayToBuy)) {
-      int toStart = indexes.get(dayToBuy);
-      for(int i = toStart; i < nums.length; i++) {
-        dayToSell = Math.max(dayToSell, nums[i]);
-      }
-    } else {
-      dayToSell = dayToBuy;
-    }
-
-
-
-    return dayToSell - dayToBuy;
+     int left = 0;
+     int right = 1;
+     int max = 0;
+     while(right < nums.length) {
+       int current = 0;
+       if(nums[left] < nums[right]) {
+         current = nums[right] - nums[left];
+         max = Math.max(max, current);
+       } else {
+         left = right;
+       }
+       right++;
+     }
+     return max;
   }
 }
